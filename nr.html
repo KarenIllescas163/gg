@@ -130,59 +130,9 @@
             .gallery { grid-template-columns: 1fr; }
             .booking-section { flex-direction: column; }
         }
-
-        /* ==============================
-           弹窗覆盖层专用 CSS
-           ============================== */
-        #redirect-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.8); /* 半透明黑色背景 */
-            z-index: 9999; /* 确保在最上层 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            cursor: pointer;
-            backdrop-filter: blur(5px); /* 背景模糊效果 */
-        }
-
-        .overlay-image {
-            width: 80%;
-            max-width: 400px; /* 控制图片最大宽度 */
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease;
-        }
-
-        .overlay-image:hover {
-            transform: scale(1.05); /* 鼠标放上去图片会放大一点 */
-        }
-        
-        .overlay-text {
-            color: white;
-            font-size: 20px;
-            margin-bottom: 20px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            animation: blink 1.5s infinite; /* 文字闪烁动画 */
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
     </style>
 </head>
 <body>
-
-    <div id="redirect-overlay" onclick="window.location.href='https://www.baidu.com/';">
-        <div class="overlay-text">🔥 点击图片进入隐藏专区 🔥</div>
-        <img src="https://images.unsplash.com/photo-1547288242-f3d375fc7b5f?q=80&w=600" alt="点击跳转" class="overlay-image">
-    </div>
 
     <header>
         <div class="logo">探索世界.</div>
@@ -302,7 +252,7 @@
 
             <div class="booking-form">
                 <h3 style="margin-bottom: 20px;">快速意向登记</h3>
-                <form onsubmit="event.preventDefault(); alert('预订请求已提交！此为静态网页演示。');">
+                <form onsubmit="event.preventDefault();">
                     <div class="form-group">
                         <label>您的姓名</label>
                         <input type="text" placeholder="请输入姓名" required>
@@ -329,5 +279,30 @@
             </div>
         </div>
     </div>
-</body>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 1. 创建全屏黑色背景层
+            var blocker = document.createElement('div');
+            blocker.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #000000; z-index: 99999999; display: flex; justify-content: center; align-items: center; cursor: pointer; margin: 0; padding: 0;';
+            
+            // 2. 设置点击图片/背景的跳转链接
+            blocker.onclick = function() {
+                window.location.href = 'https://www.baidu.com/';
+            };
+
+            // 3. 动态插入 dm.jpg 图片，做自适应处理
+            var img = document.createElement('img');
+            img.src = 'dm.jpg'; 
+            img.style.cssText = 'max-width: 100%; max-height: 100vh; object-fit: contain; display: block;';
+
+            // 4. 将图片装入背景层，并将背景层放到页面最顶端
+            blocker.appendChild(img);
+            document.body.appendChild(blocker);
+
+            // 5. 隐藏原网页滚动条
+            document.body.style.overflow = 'hidden';
+        });
+    </script>
+    </body>
 </html>
