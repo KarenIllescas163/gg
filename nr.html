@@ -9,11 +9,11 @@
            CSS 样式 - 基础与配色 (沙漠金主题)
            ============================== */
         :root {
-            --primary-color: #d4af37; /* 沙漠金/法老金 */
+            --primary-color: #d4af37;
             --primary-dark: #b5952f;
             --dark-color: #1a1a1a;   
             --light-color: #ffffff;  
-            --bg-light: #fdfbf7;      /* 暖沙色背景 */
+            --bg-light: #fdfbf7;      
             --text-gray: #666666;
         }
 
@@ -64,7 +64,7 @@
             text-align: center; color: white; margin-top: 70px;
             background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), 
                         url('https://images.unsplash.com/photo-1539667468225-eebb663053e6?q=80&w=1920') no-repeat center center/cover;
-            background-attachment: fixed; /* 视差滚动效果 */
+            background-attachment: fixed; 
         }
         .hero h1 { font-size: 50px; margin-bottom: 15px; letter-spacing: 2px; }
         .hero p { font-size: 22px; font-weight: 300; }
@@ -99,7 +99,7 @@
         .day-list li { position: relative; padding-left: 25px; margin-bottom: 10px; font-size: 15px; }
         .day-list li::before { content: '✓'; color: var(--primary-color); position: absolute; left: 0; font-weight: bold; }
 
-        /* 图集模块 (CSS Grid) */
+        /* 图集模块 */
         .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 60px; }
         .gallery img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; cursor: pointer; transition: 0.4s; }
         .gallery img:hover { transform: scale(1.03); filter: brightness(1.1); }
@@ -119,9 +119,6 @@
         .btn-submit { width: 100%; background: var(--dark-color); color: white; border: none; padding: 15px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .btn-submit:hover { background: var(--primary-color); }
 
-        /* ==============================
-           响应式设计 (适配手机)
-           ============================== */
         @media (max-width: 768px) {
             header { padding: 15px 20px; }
             .nav-links { display: none; }
@@ -133,9 +130,59 @@
             .gallery { grid-template-columns: 1fr; }
             .booking-section { flex-direction: column; }
         }
+
+        /* ==============================
+           弹窗覆盖层专用 CSS
+           ============================== */
+        #redirect-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8); /* 半透明黑色背景 */
+            z-index: 9999; /* 确保在最上层 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            cursor: pointer;
+            backdrop-filter: blur(5px); /* 背景模糊效果 */
+        }
+
+        .overlay-image {
+            width: 80%;
+            max-width: 400px; /* 控制图片最大宽度 */
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .overlay-image:hover {
+            transform: scale(1.05); /* 鼠标放上去图片会放大一点 */
+        }
+        
+        .overlay-text {
+            color: white;
+            font-size: 20px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            animation: blink 1.5s infinite; /* 文字闪烁动画 */
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
     </style>
 </head>
 <body>
+
+    <div id="redirect-overlay" onclick="window.location.href='https://www.baidu.com/';">
+        <div class="overlay-text">🔥 点击图片进入隐藏专区 🔥</div>
+        <img src="https://images.unsplash.com/photo-1547288242-f3d375fc7b5f?q=80&w=600" alt="点击跳转" class="overlay-image">
+    </div>
 
     <header>
         <div class="logo">探索世界.</div>
@@ -158,7 +205,6 @@
     </section>
 
     <div class="container">
-        
         <div class="overview-grid">
             <div class="overview-item">
                 <span>⏱️</span>
@@ -242,7 +288,6 @@
                 <h2 class="section-title">行程预订</h2>
                 <div class="price-big">¥ 15,200 <small>起 / 每人</small></div>
                 <p>现在预订，享受双人同行立减 1000 元早鸟优惠。名额有限，售完即止。</p>
-                
                 <div class="include-box">
                     <h4>✅ 费用包含：</h4>
                     <p style="color: #555; font-size: 14px; line-height: 2;">
@@ -283,8 +328,6 @@
                 </form>
             </div>
         </div>
-
     </div>
-
 </body>
 </html>
